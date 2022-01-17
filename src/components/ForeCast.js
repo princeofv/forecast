@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, FormControl, InputGroup, Button } from "react-bootstrap";
-import Lists from "./Lists";
 import { FixedSizeList } from "react-window";
 import { zipcode } from "../data/zipcode";
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import axios from "axios";
 import "./index.css";
-
+import NoSearch from "../img/sea.png";
 export default function ForeCast() {
   const [value, setValue] = useState("");
   const [search, setSearch] = useState("");
@@ -17,15 +16,11 @@ export default function ForeCast() {
   };
   const URL = `http://api.weatherapi.com/v1/current.json?key=8538a939b8004e0d95951555221601&q=${value}&aqi=no`;
   const Row1 = ({ index, style }) => (
-    <div style={{ alignItems: "center", display: "flex", justifyContent: "center" }}>
-      <p
-        onClick={(e, v, i) => {
-          console.log("object", v, i);
-        }}
-      >
-        {items[index]}
-      </p>
-    </div>
+    <>
+      <div style={{ alignItems: "center", display: "flex", justifyContent: "center" }}>
+        <p>{items[index]}</p>
+      </div>
+    </>
   );
   const items = [...zipcode]; // some list of items
   useEffect(() => {
@@ -34,6 +29,7 @@ export default function ForeCast() {
       setData(res.data);
     });
   }, [value]);
+
   return (
     <Container>
       <Row>
@@ -69,7 +65,7 @@ export default function ForeCast() {
               <FixedSizeList
                 height={400}
                 width={"100%"}
-                itemSize={30}
+                itemSize={25}
                 itemCount={items.length}
                 style={{ backgroundColor: "#e4ebe8" }}
               >
@@ -128,7 +124,14 @@ export default function ForeCast() {
               </div>
             </div>
           ) : (
-            ""
+            <Container style={{ alignItems: "center", justifyContent: "center", display: "flex" }}>
+              <Row>
+                <Col>
+                  <h2>Please Search the Zipcode</h2>
+                  <img src={NoSearch} height={300} width={300} />
+                </Col>
+              </Row>
+            </Container>
           )}
         </Col>
       </Row>
