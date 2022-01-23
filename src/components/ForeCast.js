@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col, FormControl, InputGroup, Button } from "react-bootstrap";
 import { FixedSizeList } from "react-window";
 import { zipcode } from "../data/zipcode";
+import { zipcode1 } from "../data/zip_code_database";
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import axios from "axios";
@@ -15,14 +16,22 @@ export default function ForeCast() {
     setValue(search);
   };
   const URL = `http://api.weatherapi.com/v1/current.json?key=8538a939b8004e0d95951555221601&q=${value}&aqi=no`;
-  const Row1 = ({ index, style }) => (
+  const Row1 = ({ index, style, data }) => (
     <>
-      <div style={{ alignItems: "center", display: "flex", justifyContent: "center" }}>
-        <p>{items[index]}</p>
+      <div
+        style={{ alignItems: "center", display: "flex", justifyContent: "center" }}
+        onClick={() => {
+          console.log("index", items[index][0]);
+          setValue(items[index][0]);
+        }}
+      >
+        <p>
+          {items[index][0]}-{items[index][1]}
+        </p>
       </div>
     </>
   );
-  const items = [...zipcode]; // some list of items
+  const items = [...zipcode1]; // some list of items
   useEffect(() => {
     axios.get(URL).then((res, i) => {
       console.log(`res.data`, res.data);
@@ -42,9 +51,9 @@ export default function ForeCast() {
       <hr />
       <Row>
         <Col md={3} lg={3}>
-          <div>
+          <div style={{ alignItems: "center" }}>
             <>
-              <InputGroup className="mb-3">
+              {/* <InputGroup className="mb-3">
                 <Typeahead
                   // clearButton
                   // defaultSelected={zipcode.slice(0, 1)}
@@ -59,7 +68,8 @@ export default function ForeCast() {
                 <Button variant="outline-secondary" id="button-addon2" onClick={buttonOnClick}>
                   Search
                 </Button>
-              </InputGroup>
+              </InputGroup> */}
+              <h5>California Zip codes</h5>
             </>
             <div>
               <FixedSizeList
@@ -78,7 +88,7 @@ export default function ForeCast() {
           {data ? (
             <div class="container-fluid">
               <div class="row justify-content-center">
-                <div class="col-12 col-md-4 col-sm-12 col-xs-12">
+                <div class="col-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="card p-4">
                     <h6>Country:{data.location.country}</h6>
                     <h6>Region:{data.location.region}</h6>
@@ -127,7 +137,7 @@ export default function ForeCast() {
             <Container style={{ alignItems: "center", justifyContent: "center", display: "flex" }}>
               <Row>
                 <Col>
-                  <h2>Please Search the Zipcode</h2>
+                  <h2>Please Select the Zipcode</h2>
                   <img src={NoSearch} height={300} width={300} />
                 </Col>
               </Row>
