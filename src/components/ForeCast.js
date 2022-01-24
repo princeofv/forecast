@@ -8,6 +8,10 @@ import "react-bootstrap-typeahead/css/Typeahead.css";
 import axios from "axios";
 import "./index.css";
 import NoSearch from "../img/sea.png";
+// Gutter
+const GUTTER_SIZE = 10;
+const COLUMN_WIDTH = 100;
+const ROW_HEIGHT = 35;
 export default function ForeCast() {
   const [value, setValue] = useState("");
   const [search, setSearch] = useState("");
@@ -19,7 +23,15 @@ export default function ForeCast() {
   const Row1 = ({ index, style, data }) => (
     <>
       <div
-        style={{ alignItems: "center", display: "flex", justifyContent: "center" }}
+        style={{
+          ...style,
+          alignItems: "center",
+          display: "flex",
+          justifyContent: "center",
+          left: style.left + GUTTER_SIZE,
+          top: style.top + GUTTER_SIZE,
+          height: style.height - GUTTER_SIZE,
+        }}
         onClick={() => {
           console.log("index", items[index][0]);
           setValue(items[index][0]);
@@ -73,11 +85,13 @@ export default function ForeCast() {
             </>
             <div>
               <FixedSizeList
-                height={400}
+                height={450}
                 width={"100%"}
-                itemSize={25}
+                itemSize={50}
                 itemCount={items.length}
                 style={{ backgroundColor: "#e4ebe8" }}
+                columnWidth={COLUMN_WIDTH + GUTTER_SIZE}
+                rowHeight={ROW_HEIGHT + GUTTER_SIZE}
               >
                 {Row1}
               </FixedSizeList>
