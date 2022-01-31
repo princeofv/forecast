@@ -20,7 +20,7 @@ export default function ForeCast() {
     setValue(search);
   };
   const URL = `http://api.weatherapi.com/v1/current.json?key=8538a939b8004e0d95951555221601&q=${value}&aqi=no`;
-  const Row1 = ({ index, style, data }) => (
+  const Row1 = ({ index, style }) => (
     <>
       <div
         style={{
@@ -38,7 +38,7 @@ export default function ForeCast() {
         }}
       >
         <p>
-          {items[index][0]}-{items[index][1]}
+          {items[index][1]} - {items[index][0]}
         </p>
       </div>
     </>
@@ -54,11 +54,7 @@ export default function ForeCast() {
   return (
     <Container>
       <Row>
-        <Col></Col>
-        <Col>
-          <h1>Weather Forecast </h1>
-        </Col>
-        <Col></Col>
+          <h1>Weather Forecast - California Zip Codes</h1>
       </Row>
       <hr />
       <Row>
@@ -81,7 +77,6 @@ export default function ForeCast() {
                   Search
                 </Button>
               </InputGroup> */}
-              <h5>California Zip codes</h5>
             </>
             <div>
               <FixedSizeList
@@ -100,9 +95,8 @@ export default function ForeCast() {
         </Col>
         <Col md={9}>
           {data ? (
-            <div class="container-fluid">
+            <div class="">
               <div class="row justify-content-center">
-                <div class="col-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="card p-4">
                     <h6>Country:{data.location.country}</h6>
                     <h6>Region:{data.location.region}</h6>
@@ -144,7 +138,6 @@ export default function ForeCast() {
                       </div>
                     </div>
                   </div>
-                </div>
               </div>
             </div>
           ) : (
